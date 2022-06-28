@@ -1,0 +1,26 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <script src="static/wasm_exec.js"></script>
+    <script>
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch("static/sha512.wasm"), go.importObject).then((result) => {
+            go.run(result.instance);
+        });
+    </script>
+</head>
+<body>
+<div>
+    <label for="inputField">Enter value</label>
+    <input id="inputField" name="Hash" type="text">
+    <p id="sha512"></p>
+</div>
+<script>
+    var inputField = document.querySelector('#inputField')
+    var sha512 = document.querySelector('#sha512')
+    inputField.addEventListener('keyup', function() {
+        sha512.innerHTML = SHA512(inputField.value)
+    });
+</script>
+</body>
+</html>
